@@ -37,3 +37,33 @@ Monday 13 May
 - Created python files for modules (schedule, tracker, display, archive) and main file
 - Started working on "Legal, Social and Ethical Considerations"
 - TODO: Legal, Social and Ethical Considerations
+
+Wednesday 15 May
+- Worked on part B documentation:
+- Completed "Legal, Social and Ethical Considerations"
+
+    Data Privacy & Security
+    According to the 1988 Privacy Act, information systems containing personal information must legally be able to:
+    - explain why personal information is being collected and how it will be used
+    - provide individuals with access to their records
+    - correct inaccurate information
+    - divulge details of other organisations that may be provided with information from the system
+    - describe to individuals the purpose of holding the information
+    - describe the information held and how it is managed
+
+    As part of this project, I will address these issues in my app. 
+
+    Users will be asked to create an account to save and securely store their information within the app. This will be solely for the purpose of allowing users to access their records and past information; their information will not be shared with anyone else.
+   
+    Intellectual Property & Software Licensing
+    A software licence is a document that provides legally binding guidelines for the use and distribution of software. The licence terms and conditions generally include:
+    - how many times the software can be downloaded;
+    - what the software will cost; and
+    - what level of access users will have to the source code.
+
+    My software will be classified with a public domain licence. This software is freely available, and anyone can use, change or incorporate code from it into an application. However, businesses should use caution as altered code may not meet enterprise quality and security standards. 
+
+    Artificial Intelligence (AI) 
+    The use of artificial intelligence (AI) has increased in the past year due to new innovations and technological advancements, including Chat-GPT and other open source software. This has led to a myriad of legal, social and ethical implications, especially in the education sector. Students and users have found AI to be a helpful tool in writing documents, however are now being accused of using it as a plagiarism tool and a breach of “All my own work” standards as they are not referencing it within their work. Other implications include areas surrounding responsibility, inclusion, social cohesion, autonomy, safety, bias, accountability, and environmental impacts.
+
+    In this project, Chat-GPT will be used as a tool to help me code my software in Part A, as well as brainstorming ideas and writing responses for the Part B documentation. However, I will reference these within my work, and re-word responses when necessary. 

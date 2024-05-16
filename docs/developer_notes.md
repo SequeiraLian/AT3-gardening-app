@@ -1,6 +1,6 @@
 # Developer Notes
 
-Description:This document is a record of regular (weekly) uodates to my prroject. It will describes the current task I am doing, any challenges I am facing, and upcoming goals/steps to do.
+Description: This document is a record of regular (weekly) uodates to my prroject. It will describes the current task I am doing, any challenges I am facing, and upcoming goals/steps to do.
 
 ### Term 1 Week 11
 Monday 08 April
@@ -67,3 +67,54 @@ Wednesday 15 May
     The use of artificial intelligence (AI) has increased in the past year due to new innovations and technological advancements, including Chat-GPT and other open source software. This has led to a myriad of legal, social and ethical implications, especially in the education sector. Students and users have found AI to be a helpful tool in writing documents, however are now being accused of using it as a plagiarism tool and a breach of “All my own work” standards as they are not referencing it within their work. Other implications include areas surrounding responsibility, inclusion, social cohesion, autonomy, safety, bias, accountability, and environmental impacts.
 
     In this project, Chat-GPT will be used as a tool to help me code my software in Part A, as well as brainstorming ideas and writing responses for the Part B documentation. However, I will reference these within my work, and re-word responses when necessary. 
+
+Thursday 16 May
+- Worked on part B documentation:
+- Completed "Project Management"
+
+    Gantt Chart
+    A Gantt chart is a horizontal bar chart used by project managers to visualise project tasks and the timeline required to complete each one. They usually consist of 3 components: The tasks of a project, the start date and end date of each task. They are helpful for tracking the progress of a project, ensuring that developers can complete it within the budget and time. It’s a useful tool developers can use alongside most techniques, especially for projects with a lot of dependencies. 
+
+    Creating a Gantt chart has allowed me to break down the project into smaller, manageable modules and setting goals/completion dates. This has allowed me to maximise my time efficiently, and clearly visualise and track my progress. A copy of my Gantt chart is below:
+
+    Agile Development 
+    For this project, I have chosen to use the agile approach. The agile methodology is an iterative approach to managing software development projects that focuses on continuous releases (in the form of sprints) and customer feedback. This allows developers to work closely with their clients throughout the development phase. 
+
+    The agile approach also responds well to changing user requirements and specifications, as it consists of working in sprints. This flexibility is vital, as this project must provide a working and user-friendly software application for my mum and other like-minded gardeners. 
+
+    Other advantages to this approach include:
+    - Increased quality of product: The agile approach is an iterative process, allowing for developers to continually grow with time and continually improve their products. 
+    - Consumer satisfaction: In the traditional framework, the customer is only involved in the planning phase. By closely communicating with the customer and making changes according to their feedback, developers are able to better deliver the product to the customer and ensure that the final product is suitable according to their requirements. 
+    Better control: The agile approach allows developers to have better control over the project due to its transparency, feedback integration and quality control features. 
+    - Improved project predictability: The agile framework allows developers to identify and predict risks, thus increasing their ability to plan to ensure that the project runs smoothly
+    - Reduced risks: Agile works in small sprints that focus on continuous delivery. Hence, there is always a salvageable part that can be used in the future, even if a particular approach doesn’t go as planned.
+    
+    Modular Programming
+    Modular programming is a project management tool and software design technique that emphasises separating the functionality of a program into independent modules. Each module executes one aspect of the desired functionality.  
+
+    I have utilised modules within my own project in order to break down the task and focus on specific functions, as shown below.
+
+    - Schedule Module: Forecasts days to flip the bin
+    - Tracking Module: Records bins when they are flipped
+    - Display Module: Shows information to user on the app
+    - Archive Module: Store transactions after bin cycle is completed
+- Started working on "Schedule Module":
+
+    #This module is given an input date from the user. Every 2 days from the given date, the bin must be flipped. These days must be recorded. 7 dates must be given back to the user. 
+
+    #import
+    import datetime
+
+    #ask user for first date
+    initial_date = input("Enter initial date in the format YYYY-MM-DD: ")
+
+    #check that date is given in correct format   
+
+    #calculate every 2 days from given date
+    scheduled_date = datetime.datetime.today() + datetime.timedelta(days=2)
+    print (scheduled_date)
+
+
+    #repeat 7 times
+
+    #print 7 dates 

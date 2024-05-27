@@ -118,3 +118,12 @@ Thursday 16 May
     #repeat 7 times
 
     #print 7 dates 
+
+### Term 2 Week 4
+- Worked on part B documentation - collaborative approach
+    Throughout the development of my software solution, I have involved key stakeholders. For example, I have consulted with my client (my mum) who is an avid gardener and composter, specifically in the different sections such as defining the problem, and the planning and designing of the software. This has allowed me to clearly identify and solve the problem, thus developing a solution that fits with the client’s needs and vision.  
+
+    Another key stakeholder I have consulted is my teacher, Mr Groom. This has allowed me to gain information and help from someone with more coding/software experience, allowing me to make more informed decisions about my project. For example, I was initially planning on making a mobile application, as this would be most convenient and efficient for the user. However, I do not have the available time nor the skills to make the project in this format, so I decided to use pygame to make the user interface. 
+
+    I have also collaborated with Ananya in the documentation of this project. This has sparked new ideas and allowed me to construct more cohesive responses. I have also used my Dad’s help in the front and back end development of my actual code, which has improved the quality of the software solution, increased efficiency (both through the run time of the code, and the time taken to build the software), and solving problems and bugs within the code.  
+

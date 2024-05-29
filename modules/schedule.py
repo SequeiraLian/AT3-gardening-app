@@ -1,17 +1,25 @@
 #  This module is given an input date from the user. Every 2 days from the given date, the bin must be flipped. These days must be recorded. 7 dates must be given back to the user. 
 
-# import
+# import databases
 import datetime 
-from datetime import date
+from datetime import datetime
 
-# ask user for first date
-initial_date = int(input("Enter initial date in the format YYYY-MM-DD: "))
+# current dateTime
+now = datetime.now()
 
-# TODO: test/check that date is given in correct format
+# convert date to string
+initial_date = now.strftime("%d/%m/%Y")
+print('Initial Date:', initial_date)
 
 # TODO: calculate every 2 days from given date
-scheduled_date = date(initial_date) + datetime.day(2)
-print (scheduled_date)
+
+
+num_of_dates = 7
+start = datetime.datetime.today()
+date_list = [start.date() + datetime.timedelta(days=x) for x in range(num_of_dates)]
+print('Next 3 days starting from today')
+print(date_list)
+
 
 
 # TODO: repeat 7 times

@@ -7,9 +7,13 @@ if sign_in == 1:
     user_name = input("Enter Username: ")
     password = input("Enter Password: ")
 
+# save password 
+
 # Log in
 elif sign_in == 2:
     # check if username and password is correct
+
+
 
 # Schedule
 

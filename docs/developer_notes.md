@@ -128,6 +128,11 @@ Thursday 16 May
     I have also collaborated with Ananya in the documentation of this project. This has sparked new ideas and allowed me to construct more cohesive responses. I have also used my Dad’s help in the front and back end development of my actual code, which has improved the quality of the software solution, increased efficiency (both through the run time of the code, and the time taken to build the software), and solving problems and bugs within the code.  
 
 ### Term 2 Week 5
-- Work on part B documentation - user interface design
+Thursday 30 2024
+- Worked on part B documentation - user interface design
     Text Font & Size
     Fonts should be used appropriately within software solutions. The use of fancy fonts can decrease usability considerably, as well as multiple (more than 3) fonts on a single page. In my software solution, I have used fonts that are easy to read, and are consistent across the software.
+
+
+- Worked on part B documentation - evaluation
+- 

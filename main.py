@@ -1,27 +1,74 @@
-# Login 
+from datetime import datetime, timedelta
 
-sign_in = int(input("Click 1 to Create Account or 2 to Log In: "))
+# Function to create a new bin
+def create_new_bin(bin_number):
+    # Ask the user if they would like to create a new bin
+    response = input("Would you like to create a new compost bin? (yes/no): ").strip().lower()
+    
+    if response == 'yes':
+        # Take the initial_creation date & format it
+        initial_creation_date = datetime.now()
+        initial_creation_date_str = initial_creation_date.strftime("%d-%m-%Y")
+        
+        # Input creation date, and get 7 flip dates back
+        flip_dates = get_seven_dates(initial_creation_date_str)
+        print(f"Here are the next 7 flip dates for your bin {bin_number}: ", flip_dates)
+        
+        # Return a dictionary with bin number and dates
+        return {'bin_number': bin_number, 'initial_date': initial_creation_date_str, 'flip_dates': flip_dates}
+    else:
+        print("No new compost bin created.")
+        return None
 
-# Create New Account
-if sign_in == 1:
-    user_name = input("Enter Username: ")
-    password = input("Enter Password: ")
+# Schedule function
+def get_seven_dates(initial_date_str):
+    # Convert the input string to a datetime object
+    initial_date = datetime.strptime(initial_date_str, "%d-%m-%Y")
+    
+    # Initialize an empty list to store the dates
+    dates = []
+    
+    # Generate 7 dates, each 2 days apart
+    for i in range(1, 8):
+        new_date = initial_date + timedelta(days=i * 2)
+        dates.append(new_date.strftime("%d-%m-%Y"))
+    
+    return dates
 
-# save password 
+# Tracking function
+def track_bins(bins):
+    today_str = datetime.now().strftime("%d-%m-%Y")
+    for bin in bins:
+        bin_number = bin['bin_number']
+        for j, date in enumerate(bin['flip_dates']):
+            if date == today_str:
+                response = input(f"Have you flipped bin {bin_number} scheduled for today ({date})? (yes/no): ").strip().lower()
+                if response == 'no':
+                    new_date = (datetime.strptime(date, "%d-%m-%Y") + timedelta(days=1)).strftime("%d-%m-%Y")
+                    bin['flip_dates'][j] = new_date
+                    print(f"Flip date for bin {bin_number} has been rescheduled to {new_date}.")
+                else:
+                    print(f"Bin {bin_number} has been flipped as scheduled.")
 
-# Log in
-elif sign_in == 2:
-    # check if username and password is correct
+def main():
+    bins = []
+    bin_counter = 1
+    while True:
+        command = input("Enter '1' to create a new bin, '2' to track bins, or '3' to quit: ")
+        if command == '1':
+            bin_data = create_new_bin(bin_counter)
+            if bin_data:
+                bins.append(bin_data)
+                bin_counter += 1
+        elif command == '2':
+            if bins:
+                track_bins(bins)
+            else:
+                print("No bins to track.")
+        elif command == '3':
+            break
+        else:
+            print("Invalid command. Please try again.")
 
-
-
-# Schedule
-
-
-# Track
-
-
-# Display
-
-
-# Archive
+if __name__ == "__main__":
+    main()

@@ -1,27 +1,44 @@
-#  This module is given an input date from the user. Every 2 days from the given date, the bin must be flipped. These days must be recorded. 7 dates must be given back to the user. 
+# this module takes an initial date (given by the user) and outputs 7 dates (when the bins need to be flipped). 
 
-# import databases
-import datetime 
-from datetime import datetime
+# This code was initially created by CHAT-GPT, but I have altered it to be more effective and efficient
 
-# current dateTime
-now = datetime.now()
+# import databases 
+from datetime import datetime, timedelta
 
-# convert date to string
-initial_date = now.strftime("%d/%m/%Y")
-print('Initial Date:', initial_date)
+# Function to create a new bin
+def create_new_bin(bin_number):
+    # Ask the user if they would like to create a new bin
+    response = input("Would you like to create a new compost bin? (yes/no): ").strip().lower()
+    
+    if response == 'yes':
+        # Take the initial_creation date & format it
+        initial_creation_date = datetime.now()
+        initial_creation_date_str = initial_creation_date.strftime("%d-%m-%Y")
+        
+        # Input creation date, and get 7 flip dates back
+        flip_dates = get_seven_dates(initial_creation_date_str)
+        print(f"Here are the next 7 flip dates for bin {bin_number}: ", flip_dates)
+        
+        # Return a dictionary with bin number and dates
+        return {'bin_number': bin_number, 'initial_date': initial_creation_date_str, 'flip_dates': flip_dates}
+    else:
+        print("No new compost bin created.")
+        return None
 
-# TODO: calculate every 2 days from given date
+# schedule function
+def get_seven_dates(initial_date_str):
+    # Convert the input string to a datetime object
+    initial_date = datetime.strptime(initial_date_str, "%d-%m-%Y")
+    
+    # Initialize an empty list to store the dates
+    dates = []
+    
+    # Generate 7 dates, each 2 days apart
+    for i in range(1,8):
+        new_date = initial_date + timedelta(days=i * 2)
+        dates.append(new_date.strftime("%d-%m-%Y"))
+    
+    return dates
 
-
-num_of_dates = 7
-start = datetime.datetime.today()
-date_list = [start.date() + datetime.timedelta(days=x) for x in range(num_of_dates)]
-print('Next 3 days starting from today')
-print(date_list)
-
-
-
-# TODO: repeat 7 times
-
-# TODO: print 7 dates 
+# Run the function
+create_new_bin(bin_number=1)

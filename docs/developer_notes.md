@@ -35,3 +35,8 @@ Thursday 30 2024
 - Worked on archive function
 - TODO: check if track and archive functions work. create a list of predetermined dates as input
 - TODO: need to create pygame user interface
+
+### Term 2 Week 7
+Thursday 13 June 
+- Worked on pygame interface
+- reflected on design and started coding a new interface

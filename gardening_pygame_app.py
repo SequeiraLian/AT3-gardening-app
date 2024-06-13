@@ -28,6 +28,15 @@ button_rect = pygame.Rect(WIDTH // 2 - 100, HEIGHT // 2 - 25, 200, 50)
 back_button_rect = pygame.Rect(50, HEIGHT - 50, 100, 30)
 archive_button_rect = pygame.Rect(WIDTH - 150, HEIGHT - 50, 100, 30)
 
+# TODO main page
+# write "Key:"
+# add 4 circles next to Key - red, yellow, green, gray 
+# under each circle write overdue, due, done, empty
+
+# under key, add + button (create/add new bin)
+
+
+
 # Calendar variables
 calendar_visible = False
 archive_visible = False
@@ -46,6 +55,9 @@ def draw_calendar(screen, year, month, flip_dates):
 
     # Draw calendar background
     pygame.draw.rect(screen, WHITE, calendar_rect)
+
+    # TODO: write month on top of calendar
+
 
     # Draw days of the week
     days_of_week = ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"]
@@ -75,7 +87,7 @@ def create_new_bin(bin_number, start_date=None):
     
     initial_creation_date_str = initial_creation_date.strftime("%d-%m-%Y")
     flip_dates = get_seven_dates(initial_creation_date)
-    print(f"Here are the next 7 flip dates for bin {bin_number}: ", flip_dates)
+    #print(f"Here are the next 7 flip dates for bin {bin_number}: ", flip_dates)
     return {'bin_number': bin_number, 'initial_date': initial_creation_date_str, 'flip_dates': flip_dates}
 
 def track_bins(bins, archive):
@@ -91,7 +103,7 @@ def track_bins(bins, archive):
                 if response == 'no':
                     new_date = (datetime.strptime(date, "%d-%m-%Y") + timedelta(days=1)).strftime("%d-%m-%Y")
                     flip_dates[j] = new_date
-                    print(f"Flip date for bin {bin_number} has been rescheduled to {new_date}.")
+                    #print(f"Flip date for bin {bin_number} has been rescheduled to {new_date}.")
                     all_flipped = False
                 else:
                     print(f"Bin {bin_number} has been flipped as scheduled.")
@@ -99,10 +111,10 @@ def track_bins(bins, archive):
         if all_flipped and all(datetime.strptime(date, "%d-%m-%Y") < datetime.now() for date in flip_dates):
             archive.append(bin)
             bins.remove(bin)
-            print(f"Bin {bin_number} has been completed and moved to the archive.")
+            #print(f"Bin {bin_number} has been completed and moved to the archive.")
 
 def draw_archive(screen, archive):
-    screen.fill(BLUE)
+    screen.fill(WHITE)
     if archive:
         y_offset = 50
         for archived_bin in archive:
@@ -124,7 +136,7 @@ def main():
     bin_counter = 1
     
     while running:
-        screen.fill(BLUE)
+        screen.fill(WHITE)
 
         if archive_visible:
             draw_archive(screen, archive)
@@ -133,8 +145,8 @@ def main():
             screen.blit(back_text, (back_button_rect.x + 10, back_button_rect.y + 5))
         else:
             # Draw initial screen with create button and archive button
-            pygame.draw.rect(screen, WHITE, button_rect)
-            create_text = FONT.render("Create New Bin", True, BLACK)
+            pygame.draw.rect(screen, BLACK, button_rect, 4)
+            create_text = FONT.render("+", True, BLACK)
             screen.blit(create_text, (button_rect.x + 10, button_rect.y + 10))
 
             pygame.draw.rect(screen, WHITE, archive_button_rect)
@@ -165,8 +177,8 @@ def main():
                             bins.append({'bin_number': bin_counter, 'initial_date': selected_date.strftime("%d-%m-%Y"), 'flip_dates': flip_dates})
                             bin_counter += 1
                             calendar_visible = False
-                            print(f"Selected date: {selected_date.strftime('%d-%m-%Y')}")
-                            print(f"Flip dates: {flip_dates}")
+                            #print(f"Selected date: {selected_date.strftime('%d-%m-%Y')}")
+                            #print(f"Flip dates: {flip_dates}")
 
         if calendar_visible:
             draw_calendar(screen, year, month, flip_dates)

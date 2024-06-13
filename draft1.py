@@ -14,6 +14,7 @@ BLUE = (0, 0, 255)
 RED = (255, 0, 0)
 GREEN = (0, 255, 0)
 GRAY = (169, 169, 169)
+YELLOW = (255, 255, 0)
 
 # Font
 FONT = pygame.font.Font(None, 36)
@@ -28,14 +29,15 @@ button_rect = pygame.Rect(WIDTH // 2 - 100, HEIGHT // 2 - 25, 200, 50)
 back_button_rect = pygame.Rect(50, HEIGHT - 50, 100, 30)
 archive_button_rect = pygame.Rect(WIDTH - 150, HEIGHT - 50, 100, 30)
 
-# TODO main page
-# write "Key:"
-# add 4 circles next to Key - red, yellow, green, gray 
-# under each circle write overdue, due, done, empty
-
-# under key, add + button (create/add new bin)
-
-
+# Circle settings
+circle_radius = 10
+circle_spacing = 100
+circle_positions = [
+    (100, 80),
+    (200, 80),
+    (300, 80),
+    (400, 80),
+]
 
 # Calendar variables
 calendar_visible = False
@@ -56,8 +58,9 @@ def draw_calendar(screen, year, month, flip_dates):
     # Draw calendar background
     pygame.draw.rect(screen, WHITE, calendar_rect)
 
-    # TODO: write month on top of calendar
-
+    # Month label
+    month_label = FONT.render(start_date.strftime("%B %Y"), True, BLACK)
+    screen.blit(month_label, (calendar_rect.x + 50, calendar_rect.y - 40))
 
     # Draw days of the week
     days_of_week = ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"]
@@ -74,6 +77,13 @@ def draw_calendar(screen, year, month, flip_dates):
         text = SMALL_FONT.render(str(day), True, color)
         screen.blit(text, (calendar_rect.x + 10 + x * 40, calendar_rect.y + 40 + y * 40))
 
+    # Draw the back button
+    back_label = FONT.render("X", True, BLACK)
+    back_rect = back_label.get_rect(topright=(WIDTH - 20, 20))
+    screen.blit(back_label, back_rect)
+
+    return back_rect
+
 # Schedule function to get flip dates
 def get_seven_dates(initial_date):
     dates = [(initial_date + timedelta(days=i * 2)).strftime("%d-%m-%Y") for i in range(1, 8)]
@@ -87,7 +97,6 @@ def create_new_bin(bin_number, start_date=None):
     
     initial_creation_date_str = initial_creation_date.strftime("%d-%m-%Y")
     flip_dates = get_seven_dates(initial_creation_date)
-    #print(f"Here are the next 7 flip dates for bin {bin_number}: ", flip_dates)
     return {'bin_number': bin_number, 'initial_date': initial_creation_date_str, 'flip_dates': flip_dates}
 
 def track_bins(bins, archive):
@@ -103,7 +112,6 @@ def track_bins(bins, archive):
                 if response == 'no':
                     new_date = (datetime.strptime(date, "%d-%m-%Y") + timedelta(days=1)).strftime("%d-%m-%Y")
                     flip_dates[j] = new_date
-                    #print(f"Flip date for bin {bin_number} has been rescheduled to {new_date}.")
                     all_flipped = False
                 else:
                     print(f"Bin {bin_number} has been flipped as scheduled.")
@@ -111,7 +119,7 @@ def track_bins(bins, archive):
         if all_flipped and all(datetime.strptime(date, "%d-%m-%Y") < datetime.now() for date in flip_dates):
             archive.append(bin)
             bins.remove(bin)
-            #print(f"Bin {bin_number} has been completed and moved to the archive.")
+            print(f"Bin {bin_number} has been completed and moved to the archive.")
 
 def draw_archive(screen, archive):
     screen.fill(WHITE)
@@ -128,12 +136,24 @@ def draw_archive(screen, archive):
         text = FONT.render("No bins in the archive.", True, BLACK)
         screen.blit(text, (WIDTH // 2 - 150, HEIGHT // 2))
 
+def draw_key():
+    # Draw Key label
+    key_label = FONT.render("Key:", True, BLACK)
+    screen.blit(key_label, (50, 50))
+
+    # Draw circles and labels
+    for i, (color, label) in enumerate(zip([RED, YELLOW, GREEN, GRAY], ["overdue", "due", "done", "empty"])):
+        pygame.draw.circle(screen, color, circle_positions[i], circle_radius)
+        label_surface = SMALL_FONT.render(label, True, BLACK)
+        screen.blit(label_surface, (circle_positions[i][0] - 20, circle_positions[i][1] + 20))
+
 def main():
     global calendar_visible, selected_date, flip_dates, archive_visible
     
     running = True
     year, month = 2024, 6  # For the calendar example, June 2024
     bin_counter = 1
+    back_button_rect = None
     
     while running:
         screen.fill(WHITE)
@@ -147,11 +167,13 @@ def main():
             # Draw initial screen with create button and archive button
             pygame.draw.rect(screen, BLACK, button_rect, 4)
             create_text = FONT.render("+", True, BLACK)
-            screen.blit(create_text, (button_rect.x + 10, button_rect.y + 10))
+            screen.blit(create_text, (button_rect.x + 85, button_rect.y + 10))
 
             pygame.draw.rect(screen, WHITE, archive_button_rect)
             archive_text = SMALL_FONT.render("Archive", True, BLACK)
             screen.blit(archive_text, (archive_button_rect.x + 10, archive_button_rect.y + 5))
+
+            draw_key()
 
         # Event handling
         for event in pygame.event.get():
@@ -159,7 +181,7 @@ def main():
                 running = False
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 if archive_visible:
-                    if back_button_rect.collidepoint(event.pos):
+                    if back_button_rect and back_button_rect.collidepoint(event.pos):
                         archive_visible = False
                 else:
                     if button_rect.collidepoint(event.pos):
@@ -177,11 +199,9 @@ def main():
                             bins.append({'bin_number': bin_counter, 'initial_date': selected_date.strftime("%d-%m-%Y"), 'flip_dates': flip_dates})
                             bin_counter += 1
                             calendar_visible = False
-                            #print(f"Selected date: {selected_date.strftime('%d-%m-%Y')}")
-                            #print(f"Flip dates: {flip_dates}")
 
         if calendar_visible:
-            draw_calendar(screen, year, month, flip_dates)
+            back_button_rect = draw_calendar(screen, year, month, flip_dates)
 
         pygame.display.flip()
 

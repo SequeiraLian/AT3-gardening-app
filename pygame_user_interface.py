@@ -1,6 +1,7 @@
 import pygame
 import sys
 from datetime import datetime, timedelta
+#from functions import create_new_bin, get_seven_dates, track_bins, view_archive
 
 pygame.init()
 
@@ -31,12 +32,12 @@ archive_button_rect = pygame.Rect(WIDTH - 150, HEIGHT - 50, 100, 30)
 
 # Circle settings
 circle_radius = 10
-circle_spacing = 100
+circle_spacing = 200
 circle_positions = [
     (100, 80),
-    (200, 80),
     (300, 80),
-    (400, 80),
+    (500, 80),
+    (700, 80),
 ]
 
 # Calendar variables
@@ -89,11 +90,7 @@ def draw_calendar(screen, year, month, flip_dates, bin_number):
 
     return back_rect
 
-# Schedule function to get flip dates
-def get_seven_dates(initial_date):
-    dates = [(initial_date + timedelta(days=i * 2)).strftime("%d-%m-%Y") for i in range(1, 8)]
-    return dates
-
+# function to create a new bin
 def create_new_bin(bin_number, start_date=None):
     if start_date:
         initial_creation_date = datetime.strptime(start_date, "%d-%m-%Y")
@@ -104,6 +101,12 @@ def create_new_bin(bin_number, start_date=None):
     flip_dates = get_seven_dates(initial_creation_date)
     return {'bin_number': bin_number, 'initial_date': initial_creation_date_str, 'flip_dates': flip_dates}
 
+# Schedule function to get flip dates
+def get_seven_dates(initial_date):
+    dates = [(initial_date + timedelta(days=i * 2)).strftime("%d-%m-%Y") for i in range(1, 8)]
+    return dates
+
+# function to track if bins are flipped or not
 def track_bins(bins, archive):
     today_str = datetime.now().strftime("%d-%m-%Y")
     for bin in bins[:]:
@@ -111,6 +114,7 @@ def track_bins(bins, archive):
         flip_dates = bin['flip_dates']
         all_flipped = True
 
+# TODO: change to button can click circles to change status of bin
         for j, date in enumerate(flip_dates):
             if date == today_str:
                 response = 'yes'  # Placeholder for user input
@@ -126,12 +130,13 @@ def track_bins(bins, archive):
             bins.remove(bin)
             print(f"Bin {bin_number} has been completed and moved to the archive.")
 
+# archive function
 def draw_archive(screen, archive):
     screen.fill(WHITE)
     if archive:
         y_offset = 50
         for archived_bin in archive:
-            bin_info = f"Bin {archived_bin['bin_number']} (Initial: {archived_bin['initial_date']}, Final: {archived_bin['flip_dates'][-1]})"
+            bin_info = f"Bin {archived_bin['bin_number']} (Start Date: {archived_bin['initial_date']}, Final Date: {archived_bin['flip_dates'][-1]})"
             text = SMALL_FONT.render(bin_info, True, BLACK)
             screen.blit(text, (50, y_offset))
             y_offset += 30
@@ -141,6 +146,7 @@ def draw_archive(screen, archive):
         text = FONT.render("No bins in the archive.", True, BLACK)
         screen.blit(text, (WIDTH // 2 - 150, HEIGHT // 2))
 
+# key function
 def draw_key(screen, visible):
     if visible:
         # Draw Key label
@@ -150,15 +156,15 @@ def draw_key(screen, visible):
         # Draw circles and labels aligned with the Key
         circle_labels = ["overdue", "due", "done", "empty"]
         for i, (color, label) in enumerate(zip([RED, YELLOW, GREEN, GRAY], circle_labels)):
-            pygame.draw.circle(screen, color, (50 + 70 * (i + 1), 50), circle_radius)
+            pygame.draw.circle(screen, color, (60 + 90 * (i + 1), 50), circle_radius)
             label_surface = SMALL_FONT.render(label, True, BLACK)
-            screen.blit(label_surface, (50 + 70 * (i + 1) - 20, 70))
+            screen.blit(label_surface, (60 + 90 * (i + 1) - 20, 70))
 
 def draw_bins(screen, bins):
     bin_x_start = 100
     bin_y_start = 150
-    bin_x_offset = 150
-    bin_y_offset = 100
+    bin_x_offset = 100
+    bin_y_offset = 150
     max_bins_per_row = 4
 
     for i, bin in enumerate(bins):
@@ -174,8 +180,9 @@ def main():
     global calendar_visible, selected_date, flip_dates, archive_visible, current_bin_number
     
     running = True
+    #TODO: change to update year and month based on imported module
     year, month = 2024, 6  # For the calendar example, June 2024
-    bin_counter = 1
+    bin_counter = 1 # initial bin counter starts at 1
     back_button_rect = None
     key_visible = True  # Initially visible
     
@@ -233,7 +240,7 @@ def main():
 
         if calendar_visible:
             back_button_rect = draw_calendar(screen, year, month, flip_dates, current_bin_number)
-        
+
         draw_key(screen, key_visible)  # Call draw_key() with visibility parameter
         
         pygame.display.flip()

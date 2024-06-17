@@ -40,3 +40,15 @@ Thursday 30 2024
 Thursday 13 June 
 - Worked on pygame interface
 - reflected on design and started coding a new interface
+
+Friday 14 June
+- Continued working on user interface 
+- Implemented a key on main page
+- Displayed the bins on main page after creating 
+- TODO: display function to change the colour of the bins depending on today's date and the date bin needs to be flipped
+- TODO: archive function that saves past bins to a folder?
+
+### Term 3 Week 8
+Monday 17 June
+- Updated README.md file
+ 

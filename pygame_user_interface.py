@@ -53,7 +53,7 @@ current_bin_number = None
 
 # Calendar function
 def draw_calendar(screen, year, month, flip_dates, bin_number):
-    days = days_in_month[month - 1]
+    days = (days_in_month[month - 1])
     start_date = datetime(year, month, 1)
     start_day = start_date.weekday()
 
@@ -161,6 +161,8 @@ def draw_key(screen, visible):
             screen.blit(label_surface, (60 + 90 * (i + 1) - 20, 70))
 
 def draw_bins(screen, bins):
+    today = datetime.now().strftime("%d-%m-%Y")
+
     bin_x_start = 100
     bin_y_start = 150
     bin_x_offset = 100
@@ -171,6 +173,13 @@ def draw_bins(screen, bins):
         bin_label = str(bin['bin_number'])
         bin_x = bin_x_start + (i % max_bins_per_row) * bin_x_offset
         bin_y = bin_y_start + (i // max_bins_per_row) * bin_y_offset
+        
+        # Scheduled Bin Flips - Bin colour changes if bin needs to be flipped 
+        color = GRAY  # Default color
+        if today in bin['flip_dates']:
+            color = YELLOW if not bin.get('flipped', False) else GREEN
+
+        pygame.draw.circle(screen, color, (bin_x, bin_y), circle_radius + 10)
         pygame.draw.circle(screen, BLACK, (bin_x, bin_y), circle_radius + 10, 2)
         text = SMALL_FONT.render(bin_label, True, BLACK)
         text_rect = text.get_rect(center=(bin_x, bin_y))
@@ -181,7 +190,8 @@ def main():
     
     running = True
     #TODO: change to update year and month based on imported module
-    year, month = 2024, 6  # For the calendar example, June 2024
+    year, month = 2024, 6 
+
     bin_counter = 1 # initial bin counter starts at 1
     back_button_rect = None
     key_visible = True  # Initially visible
@@ -198,9 +208,10 @@ def main():
         else:
             # Draw initial screen with create button and archive button
             pygame.draw.circle(screen, BLACK, button_circle_center, button_circle_radius, 4)
+            
             create_text = FONT.render("+", True, BLACK)
+            create_text_rect = create_text.get_rect(center=(button_circle_center[0] - 10, button_circle_center[1] - 18))
             screen.blit(create_text, (button_circle_center[0] - 10, button_circle_center[1] - 18))
-
             pygame.draw.rect(screen, WHITE, archive_button_rect)
             archive_text = SMALL_FONT.render("Archive", True, BLACK)
             screen.blit(archive_text, (archive_button_rect.x + 10, archive_button_rect.y + 5))

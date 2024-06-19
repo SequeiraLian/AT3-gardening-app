@@ -1,13 +1,17 @@
+# import modules
 import pygame
 import sys
 from datetime import datetime, timedelta
+from pygame_functions import *
+from logic_functions import *
 
+# initialise pygame
 pygame.init()
 
-# Screen dimensions
+# screen dimensions
 WIDTH, HEIGHT = 800, 600
 
-# Colors
+# colours 
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 BLUE = (0, 0, 255)
@@ -16,11 +20,11 @@ GREEN = (0, 255, 0)
 GRAY = (169, 169, 169)
 YELLOW = (255, 255, 0)
 
-# Font
+# font
 FONT = pygame.font.Font(None, 36)
 SMALL_FONT = pygame.font.Font(None, 24)
 
-# Screen setup
+# screen set up
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Compost Bin Manager")
 
@@ -52,7 +56,7 @@ current_bin_number = None
 
 # key function
 def draw_key(screen, visible):
-    if visible:
+    if visible == True:
         # Draw Key label
         key_label = FONT.render("Key:", True, BLACK)
         screen.blit(key_label, (50, 50))
@@ -64,7 +68,23 @@ def draw_key(screen, visible):
             label_surface = SMALL_FONT.render(label, True, BLACK)
             screen.blit(label_surface, (60 + 90 * (i + 1) - 20, 70))
 
-# Calendar function
+# create new bin button
+def create_new_bint():
+    # Draw initial screen with create button and archive button
+    pygame.draw.circle(screen, BLACK, button_circle_center, button_circle_radius, 4)
+    
+    # Create + Button
+    create_text = FONT.render("+", True, BLACK)
+    create_text_rect = create_text.get_rect(center=(button_circle_center[0], button_circle_center[1]))
+    screen.blit(create_text, (button_circle_center[0], button_circle_center[1]))
+
+    # Create New Bin Label
+    create_new_bin_label = FONT.render("Create New Bin:", True, BLACK)
+    screen.blit(create_new_bin_label, (50, 50))
+
+
+
+# Calendar page
 def draw_calendar(screen, year, month, flip_dates, bin_number):
     days = (days_in_month[month - 1])
     start_date = datetime(year, month, 1)
@@ -103,63 +123,6 @@ def draw_calendar(screen, year, month, flip_dates, bin_number):
 
     return back_rect
 
-# function to create a new bin
-def create_new_bin(bin_number, start_date=None):
-    if start_date:
-        initial_creation_date = datetime.strptime(start_date, "%d-%m-%Y")
-    else:
-        initial_creation_date = datetime.now()
-    
-    initial_creation_date_str = initial_creation_date.strftime("%d-%m-%Y")
-    flip_dates = get_seven_dates(initial_creation_date)
-    return {'bin_number': bin_number, 'initial_date': initial_creation_date_str, 'flip_dates': flip_dates}
-
-# Schedule function to get flip dates
-def get_seven_dates(initial_date):
-    dates = [(initial_date + timedelta(days=i * 2)).strftime("%d-%m-%Y") for i in range(1, 8)]
-    return dates
-
-# function to track if bins are flipped or not
-def track_bins(bins, archive):
-    today_str = datetime.now().strftime("%d-%m-%Y")
-    for bin in bins[:]:
-        bin_number = bin['bin_number']
-        flip_dates = bin['flip_dates']
-        all_flipped = True
-
-# TODO: change to button can click circles to change status of bin
-        for j, date in enumerate(flip_dates):
-            if date == today_str:
-                response = 'yes'  # Placeholder for user input
-                if response == 'no':
-                    new_date = (datetime.strptime(date, "%d-%m-%Y") + timedelta(days=1)).strftime("%d-%m-%Y")
-                    flip_dates[j] = new_date
-                    all_flipped = False
-                else:
-                    print(f"Bin {bin_number} has been flipped as scheduled.")
-        
-        if all_flipped and all(datetime.strptime(date, "%d-%m-%Y") < datetime.now() for date in flip_dates):
-            archive.append(bin)
-            bins.remove(bin)
-            print(f"Bin {bin_number} has been completed and moved to the archive.")
-
-# archive function
-def draw_archive(screen, archive):
-    screen.fill(WHITE)
-    if archive:
-        y_offset = 50
-        for archived_bin in archive:
-            bin_info = f"Bin {archived_bin['bin_number']} (Start Date: {archived_bin['initial_date']}, Final Date: {archived_bin['flip_dates'][-1]})"
-            text = SMALL_FONT.render(bin_info, True, BLACK)
-            screen.blit(text, (50, y_offset))
-            y_offset += 30
-            if y_offset > HEIGHT - 100:
-                break
-    else:
-        text = FONT.render("No bins in the archive.", True, BLACK)
-        screen.blit(text, (WIDTH // 2 - 150, HEIGHT // 2))
-
-
 def draw_bins(screen, bins):
     today = datetime.now().strftime("%d-%m-%Y")
 
@@ -184,6 +147,22 @@ def draw_bins(screen, bins):
         text = SMALL_FONT.render(bin_label, True, BLACK)
         text_rect = text.get_rect(center=(bin_x, bin_y))
         screen.blit(text, text_rect)
+
+# archive page
+def draw_archive(screen, archive):
+    screen.fill(WHITE)
+    if archive:
+        y_offset = 50
+        for archived_bin in archive:
+            bin_info = f"Bin {archived_bin['bin_number']} (Start Date: {archived_bin['initial_date']}, Final Date: {archived_bin['flip_dates'][-1]})"
+            text = SMALL_FONT.render(bin_info, True, BLACK)
+            screen.blit(text, (50, y_offset))
+            y_offset += 30
+            if y_offset > HEIGHT - 100:
+                break
+    else:
+        text = FONT.render("No bins in the archive.", True, BLACK)
+        screen.blit(text, (WIDTH // 2 - 150, HEIGHT // 2))
 
 def main():
     global calendar_visible, selected_date, flip_dates, archive_visible, current_bin_number

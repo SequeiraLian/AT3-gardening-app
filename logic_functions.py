@@ -13,7 +13,6 @@ def create_new_bin(bin_number):
     # Return a dictionary with bin number and dates
     return {'bin_number': bin_number, 'initial_date': initial_creation_date_str, 'flip_dates': flip_dates}
 
-
 # Schedule function
 def get_seven_dates(initial_date_str):
     # Convert the input string to a datetime object

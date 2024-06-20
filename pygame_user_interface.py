@@ -39,6 +39,22 @@ circle_positions = [
     (700, 80),
 ]
 
+# month_to_number
+month_to_number = {
+    "January": 1,
+    "February": 2,
+    "March": 3,
+    "April": 4,
+    "May": 5,
+    "June": 6,
+    "July": 7,
+    "August": 8,
+    "September": 9,
+    "October": 10,
+    "November": 11,
+    "December": 12
+}
+
 # Calendar variables
 calendar_visible = False
 archive_visible = False
@@ -189,8 +205,13 @@ def main():
     global calendar_visible, selected_date, flip_dates, archive_visible, current_bin_number
     
     running = True
-    #TODO: change to update year and month based on imported module
-    year, month = 2024, 6 
+
+    # Get the current date
+    current_datetime = datetime.now()
+
+    # get current year and month
+    current_month = current_datetime.month
+    current_year = current_datetime.year
 
     bin_counter = 1 # initial bin counter starts at 1
     back_button_rect = None
@@ -237,9 +258,9 @@ def main():
                         x, y = event.pos
                         x = (x - calendar_rect.x - 10) // 40
                         y = (y - calendar_rect.y - 40) // 40
-                        day = y * 7 + x - datetime(year, month, 1).weekday() + 1
-                        if 1 <= day <= days_in_month[month - 1]:
-                            selected_date = datetime(year, month, day)
+                        day = y * 7 + x - datetime(current_year, current_month, 1).weekday() + 1
+                        if 1 <= day <= days_in_month[current_month - 1]:
+                            selected_date = datetime(current_year, current_month, day)
                             flip_dates = get_seven_dates(selected_date)
                             bins.append({'bin_number': bin_counter, 'initial_date': selected_date.strftime("%d-%m-%Y"), 'flip_dates': flip_dates})
                             bin_counter += 1
@@ -250,7 +271,7 @@ def main():
                         key_visible = True  # Show key when calendar closes
 
         if calendar_visible:
-            back_button_rect = draw_calendar(screen, year, month, flip_dates, current_bin_number)
+            back_button_rect = draw_calendar(screen, current_year, current_month, flip_dates, current_bin_number)
 
         draw_key(screen, key_visible)  # Call draw_key() with visibility parameter
         

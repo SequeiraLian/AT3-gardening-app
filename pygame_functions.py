@@ -3,7 +3,6 @@ import pygame
 import sys
 from datetime import datetime, timedelta
 from pygame_functions import *
-from logic_functions import *
 
 # initialise pygame
 pygame.init()
@@ -81,7 +80,6 @@ def create_new_bint():
     # Create New Bin Label
     create_new_bin_label = FONT.render("Create New Bin:", True, BLACK)
     screen.blit(create_new_bin_label, (50, 50))
-
 
 
 # Calendar page

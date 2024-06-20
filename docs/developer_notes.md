@@ -52,3 +52,11 @@ Friday 14 June
 Monday 17 June
 - Updated README.md file
  
+Wednesday 19 June
+- Asked for feedback and help from my Dad:
+    -  He told me to write the full code in english pseudocode and fill it out with what I had
+    - The layout of code was messy and hard to read
+- Wrote an outline for pseudocode for user interface: ![alt text](pseudocode_outline.png)
+
+Thursday 20 June
+- Worked on pygame user interface

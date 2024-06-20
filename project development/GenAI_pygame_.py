@@ -1,3 +1,6 @@
+# NOTE: Generative AI was used in the creation of this user interface
+# PLEASE BE ADVISED: Interface does not work as pygame crashed on my computer
+
 import pygame
 from pygame.locals import *
 from datetime import datetime, timedelta

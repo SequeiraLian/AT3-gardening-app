@@ -1,3 +1,5 @@
+# NOTE: Generative AI was used in the creation of this user interface
+
 # import modules
 import pygame
 import sys

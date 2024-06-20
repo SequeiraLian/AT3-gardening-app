@@ -1,3 +1,6 @@
+# NOTE: Generative AI was used in the creation of this logic
+
+# import
 from datetime import datetime, timedelta
 
 # Function to create a new bin

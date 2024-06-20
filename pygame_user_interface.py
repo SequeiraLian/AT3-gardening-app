@@ -1,3 +1,4 @@
+# import modules
 import pygame
 import sys
 from datetime import datetime, timedelta
@@ -39,7 +40,7 @@ circle_positions = [
     (700, 80),
 ]
 
-# month_to_number
+# month to number dictionary
 month_to_number = {
     "January": 1,
     "February": 2,
@@ -74,8 +75,8 @@ def draw_key(screen, visible):
         screen.blit(key_label, (50, 50))
 
         # Draw circles and labels aligned with the Key
-        circle_labels = ["overdue", "due", "done", "empty"]
-        for i, (color, label) in enumerate(zip([RED, YELLOW, GREEN, GRAY], circle_labels)):
+        circle_labels = ["to flip", "done", "not to flip"]
+        for i, (color, label) in enumerate(zip([YELLOW, GREEN, GRAY], circle_labels)):
             pygame.draw.circle(screen, color, (60 + 90 * (i + 1), 50), circle_radius)
             label_surface = SMALL_FONT.render(label, True, BLACK)
             screen.blit(label_surface, (60 + 90 * (i + 1) - 20, 70))
@@ -102,6 +103,9 @@ def draw_calendar(screen, year, month, flip_dates, bin_number):
     for i, day in enumerate(days_of_week):
         text = SMALL_FONT.render(day, True, BLACK)
         screen.blit(text, (calendar_rect.x + 10 + i * 40, calendar_rect.y + 10))
+ 
+    # Get today's date
+    today = datetime.now()
 
     # Draw days
     for day in range(1, days + 1):
@@ -110,6 +114,12 @@ def draw_calendar(screen, year, month, flip_dates, bin_number):
         date = datetime(year, month, day).strftime("%d-%m-%Y")
         color = GREEN if date in flip_dates else BLACK
         text = SMALL_FONT.render(str(day), True, color)
+        screen.blit(text, (calendar_rect.x + 10 + x * 40, calendar_rect.y + 40 + y * 40))
+
+        # Highlight today's date
+        if year == today.year and month == today.month and day == today.day:
+            pygame.draw.circle(screen, YELLOW, (calendar_rect.x + 20 + x * 40, calendar_rect.y + 50 + y * 40), circle_radius + 5)
+
         screen.blit(text, (calendar_rect.x + 10 + x * 40, calendar_rect.y + 40 + y * 40))
 
     # Draw the back button
@@ -175,7 +185,7 @@ def draw_archive(screen, archive):
         text = FONT.render("No bins in the archive.", True, BLACK)
         screen.blit(text, (WIDTH // 2 - 150, HEIGHT // 2))
 
-
+# draw bins display function
 def draw_bins(screen, bins):
     today = datetime.now().strftime("%d-%m-%Y")
 
@@ -201,6 +211,7 @@ def draw_bins(screen, bins):
         text_rect = text.get_rect(center=(bin_x, bin_y))
         screen.blit(text, text_rect)
 
+# main function
 def main():
     global calendar_visible, selected_date, flip_dates, archive_visible, current_bin_number
     

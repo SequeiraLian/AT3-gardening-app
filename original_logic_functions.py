@@ -3,12 +3,14 @@ from datetime import datetime, timedelta
 # Function to create a new bin
 def create_new_bin(bin_number):
     # Take the initial_creation date & format it
-    initial_creation_date = datetime.now()
+    initial_creation_date = datetime.strptime(input("What date did you start the bin?: (dd-mm-yyyy)"),"%d-%m-%Y")
+    #initial_creation_date = datetime.now()
     initial_creation_date_str = initial_creation_date.strftime("%d-%m-%Y")
         
     # Input creation date, and get 7 flip dates back
     flip_dates = get_seven_dates(initial_creation_date_str)
-    print(f"Here are the next 7 flip dates for bin {bin_number}: ", flip_dates)
+    print("Bin ", bin_number, "created")
+    print(f"Flip this bin ", bin_number, "on", flip_dates)
         
     # Return a dictionary with bin number and dates
     return {'bin_number': bin_number, 'initial_date': initial_creation_date_str, 'flip_dates': flip_dates}
@@ -28,8 +30,19 @@ def get_seven_dates(initial_date_str):
     
     return dates
 
-# Function to track bins and automatically archive completed bins
+
+
+# function to track each bin
+def track_bins():
+    bin_number = input("Which bin did you flip?")
+    return bin_number
+
+
+
+'''
+# Function to track bins 
 def track_bins(bins, archive):
+    
     today_str = datetime.now().strftime("%d-%m-%Y")
     for bin in bins[:]:
         bin_number = bin['bin_number']
@@ -52,6 +65,8 @@ def track_bins(bins, archive):
             bins.remove(bin)
             print(f"Bin {bin_number} has been completed and moved to the archive.")
 
+'''
+            
 # Archive Function 
 def view_archive(archive):
     if archive:
@@ -76,7 +91,7 @@ def main():
         
         elif command == '2':
             if bins:
-                track_bins(bins)
+                track_bins()
             else:
                 print("No bins to track.")
 

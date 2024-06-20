@@ -14,10 +14,11 @@ Pygame: Despite using generative AI, I still struggled coding the pygame user in
 
 ### Features To Implement in the Future
 - Log-in page to ensure data privacy and security
-- Insights page to show productivity and bins flipped 
+- Insights page to show productivity and bins flipped per week
 - Working user interface
-    - To improve my project in the future, I would like to implement a function and event handling that allows the user to manually click and change the  colour of the bin, from 'to flip' to 'done.' Additionally, features such as ability to delete bins could be addded, as well as error handling, such as if a bin's status is incorrectly updated. 
-
+    - Track function and event handling that allows the user to manually click and change the  colour of the bin, from 'to flip' to 'done.'
+    - Features such as ability to delete bins could be addded, as well as error handling, such as if a bin's status is incorrectly updated.
+    - Archive page to view previous bins and necessary information
 
 ## User Manual
 In this repository, the main logic file is working_logic.py. The user, on Visual Studio Code, can easily interact with the program, as it will ask you for a number of inputs. 
